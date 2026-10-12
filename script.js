@@ -1,4 +1,4 @@
-import { getUserIds } from "./storage.js";
+import { getUserIds, getData } from "./storage.js";
 
 const userSelect = document.querySelector("#users");
 //Selects dropdown from .html
@@ -15,6 +15,11 @@ function populateUserDropdown() {
 
     userSelect.appendChild(option);
   });
+  console.log(getData("1"));
 }
 
 populateUserDropdown();
+
+userSelect.addEventListener("change", () => {
+  console.log(getData(userSelect.value));
+});
