@@ -38,6 +38,27 @@ function displayAgenda() {
     agendaMessage.textContent = "There are no topics scheduled for revision.";
     return;
   }
+
+  const filteredAgenda = agenda.filter((item) => {
+    return new Date(item.date) >= today;
+  });
+
+  filteredAgenda.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
+
+  if (filteredAgenda.length === 0) {
+    agendaMessage.textContent = "There are no upcoming revisions scheduled.";
+    return;
+  }
+  agendaMessage.textContent = "";
+
+  filteredAgenda.forEach((item) => {
+    const listItem = document.createElement("li");
+    listItem.textContent = item.topic;
+
+    agendaList.appendChild(listItem);
+  });
 }
 
 displayAgenda();
