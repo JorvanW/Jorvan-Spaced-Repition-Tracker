@@ -1,8 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <script type="module" src="script.mjs"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revision Tracker</title>
+    <script type="module" src="script.js"></script>
   </head>
   <body>
+    <h1>Spaced Repetition Tracker</h1>
+
+    <label for="users">Select a user:</label>
+    <select id="users">
+    </select>
+
+    <h2>Revision Agenda</h2>
+
+    <p id="agenda-message" aria-live="polite"></p>
+    // aria-live="polite" allows assistive technologies to be notified when the agenda message changes.
+
+    <ul id="agenda-list"></ul>
   </body>
 </html>
