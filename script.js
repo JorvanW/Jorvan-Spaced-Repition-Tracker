@@ -31,6 +31,9 @@ function displayAgenda() {
   const userId = userSelect.value;
   const agenda = getData(userId);
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   if (!agenda || agenda.length === 0) {
     agendaMessage.textContent = "There are no topics scheduled for revision.";
     return;
