@@ -27,6 +27,7 @@ userSelect.addEventListener("change", () => {
 });
 
 function displayAgenda() {
+  agendaList.innerHTML = "";
   const userId = userSelect.value;
   const agenda = getData(userId);
 
