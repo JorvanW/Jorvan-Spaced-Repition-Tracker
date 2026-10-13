@@ -49,6 +49,8 @@ revisionForm.addEventListener("submit", (event) => {
 
   addData(userId, revisionItems);
   displayAgenda();
+
+  revisionForm.reset();
 });
 
 function populateUserDropdown() {
