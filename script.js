@@ -8,6 +8,7 @@ const revisionDateInput = document.querySelector("#revision-date");
 
 const agendaMessage = document.querySelector("#agenda-message");
 const agendaList = document.querySelector("#agenda-list");
+const clearAgenda = document.querySelector("#clear-agenda");
 
 function formatDate(date) {
   const year = date.getFullYear();
@@ -31,6 +32,17 @@ revisionForm.addEventListener("submit", (event) => {
     alert("Please select a revision date.");
     return;
   }
+
+  clearAgenda.addEventListener("click", () => {
+    const confirmed = confirm("Are you sure you want to clear your agenda?");
+
+    if (confirmed) {
+      const userId = userSelect.value;
+      clearData(userId);
+      displayAgenda();
+    }
+  });
+
   const startDate = new Date(revisionDate);
   const userId = userSelect.value;
 
