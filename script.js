@@ -50,11 +50,11 @@ revisionForm.addEventListener("submit", (event) => {
   oneYearLater.setFullYear(startDate.getFullYear() + 1);
 
   const revisionItems = [
-    { topic: topic, date: formatDate(oneWeekLater) },
-    { topic: topic, date: formatDate(oneMonthLater) },
-    { topic: topic, date: formatDate(threeMonthsLater) },
-    { topic: topic, date: formatDate(sixMonthsLater) },
-    { topic: topic, date: formatDate(oneYearLater) },
+    { topic: topic, date: formatDate(oneWeekLater), interval: "1 week" },
+    { topic: topic, date: formatDate(oneMonthLater), interval: "1 month" },
+    { topic: topic, date: formatDate(threeMonthsLater), interval: "3 months" },
+    { topic: topic, date: formatDate(sixMonthsLater), interval: "6 months" },
+    { topic: topic, date: formatDate(oneYearLater), interval: "1 year" },
   ];
 
   addData(userId, revisionItems);
@@ -113,7 +113,7 @@ function displayAgenda() {
 
   filteredAgenda.forEach((item) => {
     const listItem = document.createElement("li");
-    listItem.textContent = `${item.topic} — ${item.date}`;
+    listItem.textContent = `${item.topic} — ${item.interval} — ${item.date}`;
 
     agendaList.appendChild(listItem);
   });
