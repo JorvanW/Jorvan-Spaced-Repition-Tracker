@@ -1,4 +1,4 @@
-import { getUserIds, getData, addData } from "./storage.js";
+import { getUserIds, getData, addData, clearData } from "./storage.js";
 
 const userSelect = document.querySelector("#users");
 //Selects dropdown from .html
@@ -33,16 +33,6 @@ revisionForm.addEventListener("submit", (event) => {
     return;
   }
 
-  clearAgenda.addEventListener("click", () => {
-    const confirmed = confirm("Are you sure you want to clear your agenda?");
-
-    if (confirmed) {
-      const userId = userSelect.value;
-      clearData(userId);
-      displayAgenda();
-    }
-  });
-
   const startDate = new Date(revisionDate);
   const userId = userSelect.value;
 
@@ -74,6 +64,18 @@ revisionForm.addEventListener("submit", (event) => {
 
   revisionForm.reset();
   revisionDateInput.value = formatDate(new Date());
+});
+
+clearAgenda.addEventListener("click", () => {
+  console.log("Clear button clicked");
+
+  const confirmed = confirm("Are you sure you want to clear your agenda?");
+
+  if (confirmed) {
+    const userId = userSelect.value;
+    clearData(userId);
+    displayAgenda();
+  }
 });
 
 function populateUserDropdown() {
