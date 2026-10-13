@@ -1,4 +1,6 @@
-import { getUserIds, getData } from "./storage.js";
+import { getUserIds, getData, addData, clearData } from "./storage.js";
+
+clearData("1");
 
 const userSelect = document.querySelector("#users");
 //Selects dropdown from .html
