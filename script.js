@@ -55,7 +55,7 @@ function displayAgenda() {
 
   filteredAgenda.forEach((item) => {
     const listItem = document.createElement("li");
-    listItem.textContent = item.topic;
+    listItem.textContent = `${item.topic} — ${item.date}`;
 
     agendaList.appendChild(listItem);
   });
