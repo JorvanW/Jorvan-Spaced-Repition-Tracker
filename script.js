@@ -4,9 +4,19 @@ clearData("1");
 
 const userSelect = document.querySelector("#users");
 //Selects dropdown from .html
+const revisionForm = document.querySelector("#revision-form");
+const topicInput = document.querySelector("#topic");
+const revisionDateInput = document.querySelector("#revision-date");
 
 const agendaMessage = document.querySelector("#agenda-message");
 const agendaList = document.querySelector("#agenda-list");
+
+revisionForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const topic = topicInput.value;
+  const revisionDate = revisionDateInput.value;
+  const startDate = new Date(revisionDate);
+});
 
 function populateUserDropdown() {
   const users = getUserIds();
