@@ -132,6 +132,7 @@ function displayAgenda() {
     agendaList.appendChild(listItem);
   });
 }
+revisionDateInput.value = formatDate(new Date());
 
 displayAgenda();
 
