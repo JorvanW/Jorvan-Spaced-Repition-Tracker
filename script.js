@@ -20,7 +20,17 @@ function formatDate(date) {
 revisionForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const topic = topicInput.value.trim();
+
+  if (topic === "") {
+    alert("Please enter a topic.");
+    return;
+  }
   const revisionDate = revisionDateInput.value;
+
+  if (revisionDate === "") {
+    alert("Please select a revision date.");
+    return;
+  }
   const startDate = new Date(revisionDate);
   const userId = userSelect.value;
 
