@@ -1,4 +1,4 @@
-import { getUserIds, getData, addData, clearData } from "./storage.js";
+import { getUserIds, getData, addData } from "./storage.js";
 
 const userSelect = document.querySelector("#users");
 //Selects dropdown from .html
@@ -51,6 +51,7 @@ revisionForm.addEventListener("submit", (event) => {
   displayAgenda();
 
   revisionForm.reset();
+  revisionDateInput.value = formatDate(new Date());
 });
 
 function populateUserDropdown() {
