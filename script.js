@@ -1,4 +1,5 @@
-import { getUserIds, getData, addData, clearData } from "./storage.js";
+import { getUserIds, formatDate, calculateRevisionDates } from "./common.js";
+import { getData, addData, clearData } from "./storage.js";
 
 const userSelect = document.querySelector("#users");
 //Selects dropdown from .html
@@ -10,22 +11,21 @@ const agendaMessage = document.querySelector("#agenda-message");
 const agendaList = document.querySelector("#agenda-list");
 const clearAgenda = document.querySelector("#clear-agenda");
 
-function formatDate(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-}
-
 revisionForm.addEventListener("submit", (event) => {
   event.preventDefault();
+
+  if (!userSelect.value) {
+    alert("Please select a user first.");
+    return;
+  }
+
   const topic = topicInput.value.trim();
 
   if (topic === "") {
     alert("Please enter a topic.");
     return;
   }
+
   const revisionDate = revisionDateInput.value;
 
   if (revisionDate === "") {
@@ -33,31 +33,15 @@ revisionForm.addEventListener("submit", (event) => {
     return;
   }
 
-  const startDate = new Date(revisionDate);
   const userId = userSelect.value;
 
-  const oneWeekLater = new Date(startDate);
-  oneWeekLater.setDate(startDate.getDate() + 7);
-
-  const oneMonthLater = new Date(startDate);
-  oneMonthLater.setMonth(startDate.getMonth() + 1);
-
-  const threeMonthsLater = new Date(startDate);
-  threeMonthsLater.setMonth(startDate.getMonth() + 3);
-
-  const sixMonthsLater = new Date(startDate);
-  sixMonthsLater.setMonth(startDate.getMonth() + 6);
-
-  const oneYearLater = new Date(startDate);
-  oneYearLater.setFullYear(startDate.getFullYear() + 1);
-
-  const revisionItems = [
-    { topic: topic, date: formatDate(oneWeekLater), interval: "1 week" },
-    { topic: topic, date: formatDate(oneMonthLater), interval: "1 month" },
-    { topic: topic, date: formatDate(threeMonthsLater), interval: "3 months" },
-    { topic: topic, date: formatDate(sixMonthsLater), interval: "6 months" },
-    { topic: topic, date: formatDate(oneYearLater), interval: "1 year" },
-  ];
+  const revisionItems = calculateRevisionDates(revisionDate).map(
+    ({ date, interval }) => ({
+      topic,
+      date,
+      interval,
+    }),
+  );
 
   addData(userId, revisionItems);
   displayAgenda();
@@ -65,8 +49,11 @@ revisionForm.addEventListener("submit", (event) => {
   revisionForm.reset();
   revisionDateInput.value = formatDate(new Date());
 });
-
 clearAgenda.addEventListener("click", () => {
+  if (!userSelect.value) {
+    alert("Please select a user first.");
+    return;
+  }
   const confirmed = confirm("Are you sure you want to clear your agenda?");
 
   if (confirmed) {
@@ -110,8 +97,10 @@ function displayAgenda() {
     return;
   }
 
+  const todayString = formatDate(today);
+
   const filteredAgenda = agenda.filter((item) => {
-    return new Date(item.date) >= today;
+    return item.date >= todayString;
   });
 
   filteredAgenda.sort((a, b) => {

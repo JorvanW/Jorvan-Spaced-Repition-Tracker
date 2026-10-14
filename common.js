@@ -2,31 +2,48 @@ export function getUserIds() {
   return ["1", "2", "3", "4", "5"];
 }
 
-export function calculateRevisionDates(startDate) {
-  const date = new Date(startDate);
+export function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
-  const oneWeekLater = new Date(date);
-  oneWeekLater.setDate(date.getDate() + 7);
+  return `${year}-${month}-${day}`;
+}
 
-  const oneMonthLater = new Date(date);
-  oneMonthLater.setMonth(date.getMonth() + 1);
+// Parse a YYYY-MM-DD string as a local calendar date.
+function parseLocalDate(dateString) {
+  const [year, month, day] = dateString.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
 
-  const threeMonthsLater = new Date(date);
-  threeMonthsLater.setMonth(date.getMonth() + 3);
+export function calculateRevisionDates(dateString) {
+  const startDate = parseLocalDate(dateString);
 
-  const sixMonthsLater = new Date(date);
-  sixMonthsLater.setMonth(date.getMonth() + 6);
+  function addMonthsClamped(date, months) {
+    const result = new Date(date);
+    const originalDay = result.getDate();
 
-  const oneYearLater = new Date(date);
-  oneYearLater.setFullYear(date.getFullYear() + 1);
+    result.setDate(1);
+    result.setMonth(result.getMonth() + months);
 
-  function formatDate(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+    const lastDayOfMonth = new Date(
+      result.getFullYear(),
+      result.getMonth() + 1,
+      0,
+    ).getDate();
 
-    return `${year}-${month}-${day}`;
+    result.setDate(Math.min(originalDay, lastDayOfMonth));
+
+    return result;
   }
+
+  const oneWeekLater = new Date(startDate);
+  oneWeekLater.setDate(oneWeekLater.getDate() + 7);
+
+  const oneMonthLater = addMonthsClamped(startDate, 1);
+  const threeMonthsLater = addMonthsClamped(startDate, 3);
+  const sixMonthsLater = addMonthsClamped(startDate, 6);
+  const oneYearLater = addMonthsClamped(startDate, 12);
 
   return [
     { date: formatDate(oneWeekLater), interval: "1 week" },

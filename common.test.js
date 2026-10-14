@@ -17,3 +17,9 @@ test("Revision dates are calculated correctly", () => {
     { date: "2027-01-01", interval: "1 year" },
   ]);
 });
+
+test("Revision dates handle the end of a month", () => {
+  const result = calculateRevisionDates("2026-01-31");
+
+  assert.equal(result[1].date, "2026-02-28");
+});
