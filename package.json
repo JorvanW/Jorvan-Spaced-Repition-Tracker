@@ -1,7 +1,8 @@
 {
   "name": "project-spaced-repetition",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "test": "node common.test.mjs"
+    "test": "node common.test.js"
   }
 }
