@@ -95,6 +95,11 @@ populateUserDropdown();
 function displayAgenda() {
   agendaList.innerHTML = "";
   const userId = userSelect.value;
+
+  if (!userId) {
+    agendaMessage.textContent = "Please select a user to view their agenda.";
+    return;
+  }
   const agenda = getData(userId);
 
   const today = new Date();
