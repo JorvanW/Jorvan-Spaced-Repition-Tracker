@@ -67,8 +67,6 @@ revisionForm.addEventListener("submit", (event) => {
 });
 
 clearAgenda.addEventListener("click", () => {
-  console.log("Clear button clicked");
-
   const confirmed = confirm("Are you sure you want to clear your agenda?");
 
   if (confirmed) {
@@ -93,10 +91,6 @@ function populateUserDropdown() {
 }
 
 populateUserDropdown();
-
-userSelect.addEventListener("change", () => {
-  console.log(getData(userSelect.value));
-});
 
 function displayAgenda() {
   agendaList.innerHTML = "";
